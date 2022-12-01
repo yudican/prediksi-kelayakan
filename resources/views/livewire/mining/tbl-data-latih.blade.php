@@ -22,7 +22,7 @@
                                 @foreach ($items as $key => $item)
                                 @if ($key == 0)
                                 @foreach ($item->dataLatih as $data_set)
-                                <th>{{$data_set->attributeNilai->attribute->nama_atribut}}</th>
+                                <th>{{$data_set->attributeNilai?->attribute?->nama_atribut ?? '-'}}</th>
                                 @endforeach
                                 @endif
                                 @endforeach
@@ -34,7 +34,7 @@
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $item->nama_nasabah }}</td>
                                 @foreach ($item->dataLatih as $data_set)
-                                <td>{{ $data_set->attributeNilai->nilai_atribut }}</td>
+                                <td>{{ $data_set->attributeNilai?->nilai_atribut ?? '-' }}</td>
                                 @endforeach
                             </tr>
                             @endforeach
