@@ -171,8 +171,12 @@ class DataNasabahController extends Component
         $this->tanggal_bergabung = $row->tanggal_bergabung;
         $this->alamat = $row->alamat;
         $this->tgl_pinjaman = $row->tgl_pinjaman;
-
-        $this->attribute_nilai_id = $row->dataLatih()->pluck('attribute_nilai_id')->toArray();
+        // attributeNilai
+        $nilai = [];
+        foreach ($row->dataLatih as $key => $value) {
+            $nilai[$value->attributeNilai->attribute_id] = $value->attribute_nilai_id . '';
+        }
+        $this->attribute_nilai_id = $nilai;
         if ($this->form) {
             $this->form_active = true;
             $this->emit('loadForm');
