@@ -28,8 +28,8 @@ class DataNasabahTable extends LivewireDatatable
         return [
             Column::name('id')->label('No.'),
             Column::name('nama_nasabah')->label('Nama Nasabah')->searchable(),
-            Column::name('nomor_hp')->label('Nomor Hp')->searchable(),
-            Column::name('tanggal_lahir')->label('Tanggal Lahir')->searchable(),
+            // Column::name('nomor_hp')->label('Nomor Hp')->searchable(),
+            // Column::name('tanggal_lahir')->label('Tanggal Lahir')->searchable(),
             Column::name('jenis_kelamin')->label('Jenis Kelamin')->searchable(),
             // Column::name('pekerjaan')->label('Pekerjaan')->searchable(),
             // Column::name('status_perkawinan')->label('Status Perkawinan')->searchable(),

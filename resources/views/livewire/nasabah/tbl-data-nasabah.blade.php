@@ -36,8 +36,9 @@
                     <div class="modal-body">
 
                         <x-text-field type="text" name="nama_nasabah" label="Nama Nasabah" />
+                        {{--
                         <x-text-field type="number" name="nomor_hp" label="Nomor Hp" />
-                        <x-text-field type="date" name="tanggal_lahir" label="Tanggal Lahir" />
+                        <x-text-field type="date" name="tanggal_lahir" label="Tanggal Lahir" /> --}}
                         {{-- <x-select name="jenis_kelamin" label="Jenis Kelamin">
                             <option value="">Select Jenis Kelamin</option>
                             <option value="Laki-Laki">Laki-Laki</option>
