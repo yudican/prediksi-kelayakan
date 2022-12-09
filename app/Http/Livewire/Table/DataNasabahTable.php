@@ -12,7 +12,7 @@ use Livewire\WithFileUploads;
 class DataNasabahTable extends LivewireDatatable
 {
 
-    protected $listeners = ['refreshTable'];
+    protected $listeners = ['refreshTable', 'hapusNasabah'];
     public $hideable = 'select';
     public $table_name = 'tbl_data_nasabah';
     public $hide = [];
@@ -26,6 +26,7 @@ class DataNasabahTable extends LivewireDatatable
     {
         $this->hide = HideableColumn::where(['table_name' => $this->table_name, 'user_id' => auth()->user()->id])->pluck('column_name')->toArray();
         return [
+            Column::checkbox(),
             Column::name('id')->label('No.'),
             Column::name('nama_nasabah')->label('Nama Nasabah')->searchable(),
             // Column::name('nomor_hp')->label('Nomor Hp')->searchable(),
@@ -58,6 +59,16 @@ class DataNasabahTable extends LivewireDatatable
     public function refreshTable()
     {
         $this->emit('refreshLivewireDatatable');
+    }
+
+    public function hapusNasabah()
+    {
+        if (count($this->selected) > 0) {
+            DataNasabah::whereIn('id', $this->selected)->delete();
+            $this->emit('refreshTable');
+            return $this->emit('showAlert', ['msg' => 'Data Berhasil Dihapus']);
+        }
+        return $this->emit('showAlertError', ['msg' => 'Pilih Data Terlebih Dahulu']);
     }
 
     public function toggle($index)

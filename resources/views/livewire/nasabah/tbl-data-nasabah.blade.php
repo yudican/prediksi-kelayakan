@@ -12,8 +12,8 @@
                             <button class="btn btn-danger btn-sm" wire:click="toggleForm(false)"><i class="fas fa-times"></i> Cancel</button>
                             @else
                             @if (auth()->user()->hasTeamPermission($curteam, $route_name.':create'))
-                            <button class="btn btn-primary btn-sm" wire:click="{{$modal ? 'showModal' : 'toggleForm(true)'}}"><i class="fas fa-plus"></i> Add
-                                New</button>
+                            <button class="btn btn-danger btn-sm" wire:click="$emit('hapusNasabah')"><i class="fas fa-times"></i> Hapus Nasabah</button>
+                            <button class="btn btn-primary btn-sm" wire:click="{{$modal ? 'showModal' : 'toggleForm(true)'}}"><i class="fas fa-plus"></i> Add New</button>
                             <button class="btn btn-success btn-sm" wire:click="$emit('showModalImport','show')"><i class="fas fa-cloud-download-alt"></i>Import</button>
                             @endif
                             @endif
