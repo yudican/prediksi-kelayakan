@@ -7,6 +7,8 @@ use App\Models\DataNasabah;
 use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\Column;
 use App\Http\Livewire\Table\LivewireDatatable;
+use App\Models\DataSet;
+use App\Models\DataSetDetail;
 use Livewire\WithFileUploads;
 
 class DataNasabahTable extends LivewireDatatable
@@ -31,7 +33,7 @@ class DataNasabahTable extends LivewireDatatable
             Column::name('nama_nasabah')->label('Nama Nasabah')->searchable(),
             // Column::name('nomor_hp')->label('Nomor Hp')->searchable(),
             // Column::name('tanggal_lahir')->label('Tanggal Lahir')->searchable(),
-            Column::name('jenis_kelamin')->label('Jenis Kelamin')->searchable(),
+            // Column::name('jenis_kelamin')->label('Jenis Kelamin')->searchable(),
             // Column::name('pekerjaan')->label('Pekerjaan')->searchable(),
             // Column::name('status_perkawinan')->label('Status Perkawinan')->searchable(),
             // Column::name('tanggal_bergabung')->label('Tanggal Bergabung')->searchable(),
@@ -65,6 +67,11 @@ class DataNasabahTable extends LivewireDatatable
     {
         if (count($this->selected) > 0) {
             DataNasabah::whereIn('id', $this->selected)->delete();
+            $data_set = DataSet::all();
+            foreach ($data_set as $key => $value) {
+                DataSetDetail::where('data_set_id', $value->id)->delete();
+                $value->delete();
+            }
             $this->emit('refreshTable');
             return $this->emit('showAlert', ['msg' => 'Data Berhasil Dihapus']);
         }

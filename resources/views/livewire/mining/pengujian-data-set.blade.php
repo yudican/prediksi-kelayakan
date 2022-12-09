@@ -35,7 +35,7 @@
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $item['nama'] }}</td>
                                 @foreach ($item['data_latih'] as $data_set)
-                                <td>{{ $data_set->attributeNilai->nilai_atribut }}</td>
+                                <td>{{ $data_set->attributeNilai?->nilai_atribut ?? '-'}}</td>
                                 @endforeach
                                 <td>{{ $item['hasil_uji'] }}</td>
                             </tr>

@@ -39,7 +39,7 @@
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 @foreach ($item->dataSetDetail as $data_set)
-                                <td>{{ $data_set->attributeNilai->nilai_atribut }}</td>
+                                <td>{{ $data_set->attributeNilai?->nilai_atribut ?? '-' }}</td>
                                 @endforeach
                                 <td>
                                     <button class="btn btn-success btn-sm" wire:click="getDataDataSetById('{{ $item->id }}')" id="btn-edit-{{ $item->id }}"><i class="fas fa-edit"></i></button>

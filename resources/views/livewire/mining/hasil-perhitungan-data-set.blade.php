@@ -27,7 +27,7 @@
                             <tr>
                                 <th>Total</th>
                                 @foreach ($target_attributes as $attribute)
-                                <th>{{$attribute->nilai_atribut}}</th>
+                                <th>{{$attribute?->nilai_atribut ?? '-'}}</th>
                                 @endforeach
                             </tr>
                         </thead>

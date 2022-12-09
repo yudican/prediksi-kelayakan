@@ -5,6 +5,8 @@ namespace App\Imports;
 use App\Models\AttributeNilai;
 use App\Models\DataLatih;
 use App\Models\DataNasabah as ModelsDataNasabah;
+use App\Models\DataSet;
+use App\Models\DataSetDetail;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -18,30 +20,7 @@ class DataNasabah implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        // AttributeNilai::updateOrCreate(['nilai_atribut' => $row['jenis_kelamin']], [
-        //     'attribute_id' => 8,
-        //     'nilai_atribut' => trim($row['jenis_kelamin']),
-        // ]);
-        // AttributeNilai::updateOrCreate(['nilai_atribut' => $row['tang']], [
-        //     'attribute_id' => 2,
-        //     'nilai_atribut' => $row['tang'],
-        // ]);
-        // AttributeNilai::updateOrCreate(['nilai_atribut' => $row['penpin']], [
-        //     'attribute_id' => 3,
-        //     'nilai_atribut' => $row['penpin'],
-        // ]);
-        // AttributeNilai::updateOrCreate(['nilai_atribut' => $row['jenis_usaha']], [
-        //     'attribute_id' => 4,
-        //     'nilai_atribut' => $row['jenis_usaha'],
-        // ]);
-        // AttributeNilai::updateOrCreate(['nilai_atribut' => $row['pepin']], [
-        //     'attribute_id' => 5,
-        //     'nilai_atribut' => $row['pepin'],
-        // ]);
-        // AttributeNilai::updateOrCreate(['nilai_atribut' => $row['kategori']], [
-        //     'attribute_id' => 6,
-        //     'nilai_atribut' => $row['kategori'],
-        // ]);
+
         $data = [
             'nama_nasabah'     => $row['nama_nasabah'] ?? '-',
             'nomor_hp'    => $row['nomor_hp'] ?? '-',
@@ -87,6 +66,47 @@ class DataNasabah implements ToModel, WithHeadingRow
         ];
 
         DataLatih::insert($data_to_store);
+
+        $data_set = DataSet::create(['kode' => 'SET-' . rand(123, 534) . '-' . rand(534, 796)]);
+        $data_set_detail = [
+            [
+                'data_set_id' => $data_set->id,
+                'attribute_nilai_id' => $this->getAttributrValue($row['tang']),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'data_set_id' => $data_set->id,
+                'attribute_nilai_id' => $this->getAttributrValue($row['penpin']),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'data_set_id' => $data_set->id,
+                'attribute_nilai_id' => $this->getAttributrValue($row['jenis_usaha']),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'data_set_id' => $data_set->id,
+                'attribute_nilai_id' => $this->getAttributrValue($row['pepin']),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'data_set_id' => $data_set->id,
+                'attribute_nilai_id' => $this->getAttributrValue($row['kategori']),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'data_set_id' => $data_set->id,
+                'attribute_nilai_id' => $this->getAttributrValue(trim($row['jenis_kelamin'])),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+        ];
+        DataSetDetail::insert($data_set_detail);
     }
 
     // public function headingRow(): int
@@ -96,7 +116,7 @@ class DataNasabah implements ToModel, WithHeadingRow
 
     public function getAttributrValue($field)
     {
-        $value = AttributeNilai::where('nilai_atribut', 'like', "%$field%")->first();
+        $value = AttributeNilai::where('nilai_atribut', "$field")->first();
         if ($value) {
             return $value->id;
         }

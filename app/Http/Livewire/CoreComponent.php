@@ -12,7 +12,7 @@ use App\Models\DataSetDetail;
 
 class CoreComponent extends Component
 {
-  public $target_attribute = 'Setujui';
+  public $target_attribute = 'Kategori';
   public $data = [];
   public $target_attributes = [];
   public $no = 1;
@@ -26,7 +26,9 @@ class CoreComponent extends Component
     $data[0] = $attributes;
     foreach ($data_set as $key => $item) {
       foreach ($item->dataSetDetail as $detail) {
-        $data[$key + 1][] = $detail->attributeNilai->nilai_atribut;
+        if ($detail->attributeNilai) {
+          $data[$key + 1][] = $detail->attributeNilai->nilai_atribut;
+        }
       }
     }
     // dd($data);
@@ -55,9 +57,9 @@ class CoreComponent extends Component
     $this->target_attributes = $attribute->get();
     foreach ($data_set as $set) {
       foreach ($set->dataSetDetail as $key => $detail) {
-        $nama_atribut = $detail->attributeNilai->attribute->nama_atribut;
-        $nilai_atribut = $detail->attributeNilai->nilai_atribut;
-        $id_atribut = $detail->attributeNilai->id;
+        $nama_atribut = $detail?->attributeNilai?->attribute?->nama_atribut ?? '-';
+        $nilai_atribut = $detail?->attributeNilai?->nilai_atribut ?? '-';
+        $id_atribut = $detail?->attributeNilai->id;
         if (!in_array($id_atribut, $target_attribute)) {
           foreach ($target_attribute as $target) {
             $nilai = DataSetDetail::where('data_set_id', $set->id)->where('attribute_nilai_id', $target)->pluck('attribute_nilai_id')->toArray();
@@ -77,7 +79,6 @@ class CoreComponent extends Component
       }
     }
 
-
     foreach ($data_set as $set) {
       foreach ($set->dataSetDetail as $key => $detail) {
         $nama_atribut = $detail->attributeNilai->attribute->nama_atribut;
@@ -87,15 +88,17 @@ class CoreComponent extends Component
         $attributes = [];
         if (!in_array($id_atribut, $target_attribute)) {
           foreach ($target_attribute as $target) {
-            $lists[] = count($total[$id_atribut][$target]);
-            $attribute_nilai = AttributeNilai::where('attribute_id', $detail->attributeNilai->attribute->id)->pluck('id')->toArray();
-            $data[$id_atribut][$target] = [
-              'atribut' => $nama_atribut,
-              'nilai' => $nilai_atribut,
-              'total' => ($total[$id_atribut][$target]),
-              'id_attribute' => $attribute_nilai,
-              'data_set_id' => $set->id,
-            ];
+            if (isset($total[$id_atribut][$target])) {
+              $lists[] = count($total[$id_atribut][$target]);
+              $attribute_nilai = AttributeNilai::where('attribute_id', $detail->attributeNilai->attribute->id)->pluck('id')->toArray();
+              $data[$id_atribut][$target] = [
+                'atribut' => $nama_atribut,
+                'nilai' => $nilai_atribut,
+                'total' => ($total[$id_atribut][$target]),
+                'id_attribute' => $attribute_nilai,
+                'data_set_id' => $set->id,
+              ];
+            }
           }
         } else {
           foreach ($target_attribute as $target) {
@@ -109,6 +112,7 @@ class CoreComponent extends Component
         }
       }
     }
+
     $newData = [];
     $no = 0;
     foreach ($data as $key => $items) {
@@ -125,6 +129,7 @@ class CoreComponent extends Component
         }
       }
     }
+
     foreach ($data as $key => $items) {
       if ($key != 'total') {
         $listData = [];
@@ -169,7 +174,6 @@ class CoreComponent extends Component
         $datas[$key]['gain'] = 0;
       }
     }
-
     if ($final) {
       return $datas;
     }

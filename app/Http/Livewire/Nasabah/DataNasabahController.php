@@ -95,7 +95,7 @@ class DataNasabahController extends Component
             'nama_nasabah'  => $this->nama_nasabah,
             'nomor_hp'  => $this->nomor_hp,
             'tanggal_lahir'  => $this->tanggal_lahir,
-            'jenis_kelamin'  => $this->jenis_kelamin,
+            // 'jenis_kelamin'  => $this->jenis_kelamin,
             'pekerjaan'  => $this->pekerjaan,
             'status_perkawinan'  => $this->status_perkawinan,
             'tanggal_bergabung'  => $this->tanggal_bergabung,
