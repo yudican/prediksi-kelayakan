@@ -51,7 +51,7 @@
 
                 <a href="{{route('dashboard')}}" class="logo">
                     {{-- <img src="{{asset('assets/img/logo-admin.svg')}}" style="height: 20px" alt="navbar brand" class="navbar-brand"> --}}
-                    <span class="text-white">C 4.5</span>
+                    <span class="text-white">Prediksi Kelayakan</span>
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
