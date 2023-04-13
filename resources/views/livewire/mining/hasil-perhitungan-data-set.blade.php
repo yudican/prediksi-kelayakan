@@ -44,6 +44,8 @@
                                 <td>{{$item['entrophy']}}</td>
                                 @if (isset($item['gain']))
                                 <td rowspan="{{$item['atribut'] == 'Total' ? 1 : count($item['total'])}}">{{$item['gain']}}</td>
+                                @else
+                                <td></td>
                                 @endif
                             </tr>
                             @endforeach

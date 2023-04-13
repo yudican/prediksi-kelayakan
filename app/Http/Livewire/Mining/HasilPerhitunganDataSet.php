@@ -10,6 +10,7 @@ class HasilPerhitunganDataSet extends CoreComponent
     public function mount()
     {
         $this->data = $this->perhitunganDataSet(true);
+        // dd($this->data);
     }
     public function render()
     {

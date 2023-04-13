@@ -65,6 +65,8 @@ class CoreComponent extends Component
             $nilai = DataSetDetail::where('data_set_id', $set->id)->where('attribute_nilai_id', $target)->pluck('attribute_nilai_id')->toArray();
             if (count($nilai) > 0) {
               $total[$id_atribut][$target][] = count($nilai);
+            } else {
+              $total[$id_atribut][$target][] = 0;
             }
           }
         } else {
@@ -72,6 +74,8 @@ class CoreComponent extends Component
             $nilai = DataSetDetail::where('data_set_id', $set->id)->where('attribute_nilai_id', $target)->pluck('attribute_nilai_id')->toArray();
             if (count($nilai) > 0) {
               $total['total'][$target][] = count($nilai);
+            } else {
+              $total['total'][$target][] = 0;
             }
           }
         }
@@ -79,6 +83,7 @@ class CoreComponent extends Component
       }
     }
 
+    // dd($total);
     foreach ($data_set as $set) {
       foreach ($set->dataSetDetail as $key => $detail) {
         $nama_atribut = $detail->attributeNilai->attribute->nama_atribut;
@@ -174,6 +179,7 @@ class CoreComponent extends Component
         $datas[$key]['gain'] = 0;
       }
     }
+    // dd($datas);
     if ($final) {
       return $datas;
     }

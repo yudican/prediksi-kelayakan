@@ -13,5 +13,5 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-app/Http/Livewire/CrudGenerator.php
-resources/views/livewire/crud-generator.blade.php
+# app/Http/Livewire/CrudGenerator.php
+# resources/views/livewire/crud-generator.blade.php
