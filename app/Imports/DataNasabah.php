@@ -20,14 +20,14 @@ class DataNasabah implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-
-        $data = [
-            'nama_nasabah'     => $row['nama_nasabah'] ?? '-',
-            'nomor_hp'    => $row['nomor_hp'] ?? '-',
-            'tanggal_lahir' => $row['tanggal_lahir'] ?? '1990-01-01',
+        try {
+           $data = [
+            'nama_nasabah'     => isset($row['nama_nasabah']) ? $row['nama_nasabah'] : '-',
+            'nomor_hp'    => isset($row['nomor_hp']) ? $row['nomor_hp'] : '-',
+            'tanggal_lahir' => isset($row['tanggal_lahir']) ? $row['tanggal_lahir'] :  '1990-01-01',
             'jenis_kelamin' => trim($row['jenis_kelamin']) == 'L' ? 'Laki-laki' : 'Perempuan',
-            'tanggal_pinjaman' => $row['tanggal_pinjaman'] ?? null,
-            'status_pernikahan' => $row['status_pernikahan'] ?? 'Menikah',
+            'tanggal_pinjaman' => isset($row['tanggal_pinjaman']) ? $row['tanggal_lahir'] : null,
+            'status_pernikahan' => isset($row['status_pernikahan']) ?? 'Menikah',
         ];
 
         $nasabah = ModelsDataNasabah::create($data);
@@ -107,6 +107,10 @@ class DataNasabah implements ToModel, WithHeadingRow
             ],
         ];
         DataSetDetail::insert($data_set_detail);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        
     }
 
     // public function headingRow(): int
