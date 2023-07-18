@@ -174,7 +174,9 @@ class DataNasabahController extends Component
         // attributeNilai
         $nilai = [];
         foreach ($row->dataLatih as $key => $value) {
+            if($value->attributeNilai){
             $nilai[$value->attributeNilai->attribute_id] = $value->attribute_nilai_id . '';
+            }
         }
         $this->attribute_nilai_id = $nilai;
         if ($this->form) {
