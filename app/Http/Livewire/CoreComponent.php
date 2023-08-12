@@ -69,13 +69,7 @@ class CoreComponent extends Component
         $id_atribut = $detail?->attributeNilai?->id;
         if (!in_array($id_atribut, $target_attribute)) {
           foreach ($target_attribute as $target) {
-            $nilai = DataSetDetail::whereHas('attributeNilai', function ($query) use ($jenis_kelamin) {
-              return $query->whereHas('dataLatih', function ($query) use ($jenis_kelamin) {
-                return $query->whereHas('dataNasabah', function ($query) use ($jenis_kelamin) {
-                  return $query->where('jenis_kelamin', $jenis_kelamin);
-                });
-              });
-            })->where('data_set_id', $set->id)->where('attribute_nilai_id', $target)->pluck('attribute_nilai_id')->toArray();
+            $nilai = DataSetDetail::where('data_set_id', $set->id)->where('attribute_nilai_id', $target)->pluck('attribute_nilai_id')->toArray();
             if (count($nilai) > 0) {
               $total[$id_atribut][$target][] = count($nilai);
             } else {
@@ -84,13 +78,7 @@ class CoreComponent extends Component
           }
         } else {
           foreach ($target_attribute as $target) {
-            $nilai = DataSetDetail::whereHas('attributeNilai', function ($query) use ($jenis_kelamin) {
-              return $query->whereHas('dataLatih', function ($query) use ($jenis_kelamin) {
-                return $query->whereHas('dataNasabah', function ($query) use ($jenis_kelamin) {
-                  return $query->where('jenis_kelamin', $jenis_kelamin);
-                });
-              });
-            })->where('data_set_id', $set->id)->where('attribute_nilai_id', $target)->pluck('attribute_nilai_id')->toArray();
+            $nilai = DataSetDetail::where('data_set_id', $set->id)->where('attribute_nilai_id', $target)->pluck('attribute_nilai_id')->toArray();
             if (count($nilai) > 0) {
               $total['total'][$target][] = count($nilai);
             } else {
@@ -104,7 +92,9 @@ class CoreComponent extends Component
 
     // dd($total);
     foreach ($data_set as $set) {
-      foreach ($set->dataSetDetail as $key => $detail) {
+      foreach ($set->dataSetDetail()->whereHas('attributeNilai', function ($query) use ($jenis_kelamin) {
+        return $query->where('attribute_id', 8)->where('nilai_attribut', $jenis_kelamin == 'Laki-Laki' ? 'L' : 'P');
+      })->get() as $key => $detail) {
         $nama_atribut = $detail->attributeNilai?->attribute?->nama_atribut;
         $nilai_atribut = $detail->attributeNilai?->nilai_atribut;
         $id_atribut = $detail->attributeNilai?->id;
