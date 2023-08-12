@@ -35,6 +35,6 @@ class DataLatih extends Model
      */
     public function dataNasabah()
     {
-        return $this->belongsTo(DataNasabah::class);
+        return $this->belongsTo(DataNasabah::class, 'data_nasabah_id');
     }
 }
