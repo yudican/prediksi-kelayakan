@@ -56,7 +56,7 @@ class CoreComponent extends Component
         return $query->where('jenis_kelamin', $jenis_kelamin);
       });
     });
-    dd($attribute->get(), $jenis_kelamin);
+    // dd($attribute->get(), $jenis_kelamin);
     $target_attribute = $attribute->pluck('id')->toArray();
     $this->target_attributes = $attribute->get();
     foreach ($data_set as $set) {
