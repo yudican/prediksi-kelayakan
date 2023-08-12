@@ -10,12 +10,13 @@ class HasilPerhitunganDataSet extends CoreComponent
     public $jenis_kelamin = 'Laki-Laki';
     public function mount()
     {
-        $this->data = $this->perhitunganDataSet(true, $this->jenis_kelamin);
+        // $this->data = $this->perhitunganDataSet(true, $this->jenis_kelamin);
         // dd($this->data);
     }
 
     public function render()
     {
+        $this->data = $this->perhitunganDataSet(true, $this->jenis_kelamin);
         return view('livewire.mining.hasil-perhitungan-data-set');
     }
 }
