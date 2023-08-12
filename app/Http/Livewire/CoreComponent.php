@@ -216,8 +216,11 @@ class CoreComponent extends Component
   {
     $gain = $entrophy_total;
     foreach ($datas as $key => $jumlah) {
-      $total_gain = ($jumlah / $total) * $entrophy;
-      $gain -= $total_gain;
+      if ($jumlah > 0 &&  $total > 0) {
+        $total_gain = ($jumlah / $total) * $entrophy;
+        $gain -= $total_gain;
+      }
+      $gain -= 0;
     }
 
 
