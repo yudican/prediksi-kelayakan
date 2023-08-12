@@ -38,6 +38,7 @@
                         </thead>
                         <tbody>
                             @foreach ($data as $key => $item)
+                            @if (isset($item['atribut']))
                             <tr>
                                 <td>{{$no++}}</td>
                                 <td>{{$item['atribut']}}</td>
@@ -53,6 +54,7 @@
                                 <td></td>
                                 @endif
                             </tr>
+                            @endif
                             @endforeach
                         </tbody>
                     </table>
