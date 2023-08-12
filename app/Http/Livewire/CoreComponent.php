@@ -60,7 +60,6 @@ class CoreComponent extends Component
     $attribute = AttributeNilai::whereHas('attribute', function ($query) use ($jenis_kelamin) {
       return $query->where('nama_atribut', $this->target_attribute);
     });
-    dd($attribute->get(), $jenis_kelamin);
     $target_attribute = $attribute->pluck('id')->toArray();
     $this->target_attributes = $attribute->get();
     foreach ($data_set as $set) {
