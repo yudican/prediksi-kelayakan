@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title text-capitalize text-center">
-                        SELAMAT DATANG DI APLIKASI PREDIKSI KELAYAKAN DENGAN ALGORITMA C4.5
+                        selamat datang di aplikasi prediksi kelayakan pemberian pinjaman pada nasabah koperasi cendrawasih mandiri menggunakan algortima c4.5
                     </h4>
                 </div>
             </div>

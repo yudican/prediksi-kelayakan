@@ -27,7 +27,7 @@ class CoreComponent extends Component
     foreach ($data_set as $key => $item) {
       foreach ($item->dataSetDetail as $detail) {
         if ($detail->attributeNilai) {
-          $data[$key + 1][] = $detail->attributeNilai->nilai_atribut;
+          $data[$key + 1][] = $detail->attributeNilai?->nilai_atribut;
         }
       }
     }
@@ -59,7 +59,7 @@ class CoreComponent extends Component
       foreach ($set->dataSetDetail as $key => $detail) {
         $nama_atribut = $detail?->attributeNilai?->attribute?->nama_atribut ?? '-';
         $nilai_atribut = $detail?->attributeNilai?->nilai_atribut ?? '-';
-        $id_atribut = $detail?->attributeNilai->id;
+        $id_atribut = $detail?->attributeNilai?->id;
         if (!in_array($id_atribut, $target_attribute)) {
           foreach ($target_attribute as $target) {
             $nilai = DataSetDetail::where('data_set_id', $set->id)->where('attribute_nilai_id', $target)->pluck('attribute_nilai_id')->toArray();
@@ -86,16 +86,16 @@ class CoreComponent extends Component
     // dd($total);
     foreach ($data_set as $set) {
       foreach ($set->dataSetDetail as $key => $detail) {
-        $nama_atribut = $detail->attributeNilai->attribute->nama_atribut;
-        $nilai_atribut = $detail->attributeNilai->nilai_atribut;
-        $id_atribut = $detail->attributeNilai->id;
+        $nama_atribut = $detail->attributeNilai?->attribute?->nama_atribut;
+        $nilai_atribut = $detail->attributeNilai?->nilai_atribut;
+        $id_atribut = $detail->attributeNilai?->id;
         $lists = [];
         $attributes = [];
         if (!in_array($id_atribut, $target_attribute)) {
           foreach ($target_attribute as $target) {
             if (isset($total[$id_atribut][$target])) {
               $lists[] = count($total[$id_atribut][$target]);
-              $attribute_nilai = AttributeNilai::where('attribute_id', $detail->attributeNilai->attribute->id)->pluck('id')->toArray();
+              $attribute_nilai = AttributeNilai::where('attribute_id', $detail->attributeNilai?->attribute?->id)->pluck('id')->toArray();
               $data[$id_atribut][$target] = [
                 'atribut' => $nama_atribut,
                 'nilai' => $nilai_atribut,
