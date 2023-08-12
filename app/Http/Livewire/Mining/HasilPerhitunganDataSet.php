@@ -7,11 +7,13 @@ use App\Http\Livewire\CoreComponent;
 class HasilPerhitunganDataSet extends CoreComponent
 {
     public $data = [];
+    public $jenis_kelamin = 'Laki-Laki';
     public function mount()
     {
-        $this->data = $this->perhitunganDataSet(true);
+        $this->data = $this->perhitunganDataSet(true, $this->jenis_kelamin);
         // dd($this->data);
     }
+
     public function render()
     {
         return view('livewire.mining.hasil-perhitungan-data-set');

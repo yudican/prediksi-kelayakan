@@ -27,4 +27,14 @@ class DataLatih extends Model
     {
         return $this->belongsTo(AttributeNilai::class, 'attribute_nilai_id');
     }
+
+    /**
+     * Get the dataNasabah that owns the DataLatih
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function dataNasabah()
+    {
+        return $this->belongsTo(DataNasabah::class,);
+    }
 }

@@ -14,6 +14,11 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
+                    <x-select name="jenis_kelamin" label="Jenis Kelamin">
+                        <option value="">Pilih Jenis Kelamin</option>
+                        <option value="Laki-Laki">Laki-Laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                    </x-select>
                     <table class="table table-bordered">
                         <thead>
                             <tr>

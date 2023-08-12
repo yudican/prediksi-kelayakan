@@ -37,4 +37,14 @@ class AttributeNilai extends Model
     {
         return $this->hasMany(DataSetDetail::class);
     }
+
+    /**
+     * Get all of the dataLatih for the AttributeNilai
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function dataLatih()
+    {
+        return $this->hasMany(DataLatih::class);
+    }
 }

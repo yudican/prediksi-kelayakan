@@ -43,14 +43,18 @@ class CoreComponent extends Component
   }
 
 
-  public function perhitunganDataSet($final = false)
+  public function perhitunganDataSet($final = false, $jenis_kelamin = null)
   {
     $data = [];
     $total = [];
 
     $data_set = DataSet::all();
-    $attribute = AttributeNilai::whereHas('attribute', function ($query) {
-      return $query->where('nama_atribut', $this->target_attribute);
+    $attribute = AttributeNilai::whereHas('attribute', function ($query) use ($jenis_kelamin) {
+      return $query->where('nama_atribut', $this->target_attribute)->whereHas('dataLatih', function ($query) use ($jenis_kelamin) {
+        return $query->whereHas('dataNasabah', function ($query) use ($jenis_kelamin) {
+          return $query->where('jenis_kelamin', $jenis_kelamin);
+        });
+      });
     });
 
     $target_attribute = $attribute->pluck('id')->toArray();
