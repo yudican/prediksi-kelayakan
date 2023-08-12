@@ -48,7 +48,15 @@ class CoreComponent extends Component
     $data = [];
     $total = [];
 
-    $data_set = DataSet::all();
+    $data_set = DataSet::whereHas('dataSetDetail', function($query) use($jenis_kelamin){
+      return $query->whereHas('attributeNilai', function($query) use($jenis_kelamin) {
+        return $query->whereHas('dataLatih', function ($query) use ($jenis_kelamin) {
+          return $query->whereHas('dataNasabah', function ($query) use ($jenis_kelamin) {
+            return $query->where('jenis_kelamin', $jenis_kelamin);
+          });
+        })
+      });
+    })->get();
     $attribute = AttributeNilai::whereHas('attribute', function ($query) use ($jenis_kelamin) {
       return $query->where('nama_atribut', $this->target_attribute);
     });
