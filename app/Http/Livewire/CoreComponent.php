@@ -93,7 +93,7 @@ class CoreComponent extends Component
     // dd($total);
     foreach ($data_set as $set) {
       foreach ($set->dataSetDetail()->whereHas('attributeNilai', function ($query) use ($jenis_kelamin) {
-        return $query->where('attribute_id', 8)->where('nilai_attribut', $jenis_kelamin == 'Laki-Laki' ? 'L' : 'P');
+        return $query->where('attribute_id', 8)->where('nilai_atribut', $jenis_kelamin == 'Laki-Laki' ? 'L' : 'P');
       })->get() as $key => $detail) {
         $nama_atribut = $detail->attributeNilai?->attribute?->nama_atribut;
         $nilai_atribut = $detail->attributeNilai?->nilai_atribut;
