@@ -45,6 +45,6 @@ class AttributeNilai extends Model
      */
     public function dataLatih()
     {
-        return $this->hasMany(DataLatih::class);
+        return $this->belongsTo(DataLatih::class);
     }
 }
