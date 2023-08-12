@@ -50,10 +50,10 @@ class CoreComponent extends Component
 
     $data_set = DataSet::all();
     $attribute = AttributeNilai::whereHas('attribute', function ($query) use ($jenis_kelamin) {
-      return $query->where('nama_atribut', $this->target_attribute)->whereHas('dataLatih', function ($query) use ($jenis_kelamin) {
-        return $query->whereHas('dataNasabah', function ($query) use ($jenis_kelamin) {
-          return $query->where('jenis_kelamin', $jenis_kelamin);
-        });
+      return $query->where('nama_atribut', $this->target_attribute);
+    })->whereHas('dataLatih', function ($query) use ($jenis_kelamin) {
+      return $query->whereHas('dataNasabah', function ($query) use ($jenis_kelamin) {
+        return $query->where('jenis_kelamin', $jenis_kelamin);
       });
     });
 
