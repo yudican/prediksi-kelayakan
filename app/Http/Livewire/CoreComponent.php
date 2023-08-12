@@ -69,7 +69,13 @@ class CoreComponent extends Component
         $id_atribut = $detail?->attributeNilai?->id;
         if (!in_array($id_atribut, $target_attribute)) {
           foreach ($target_attribute as $target) {
-            $nilai = DataSetDetail::where('data_set_id', $set->id)->where('attribute_nilai_id', $target)->pluck('attribute_nilai_id')->toArray();
+            $nilai = DataSetDetail::whereHas('attributeNilai', function ($query) use ($jenis_kelamin) {
+              return $query->whereHas('dataLatih', function ($query) use ($jenis_kelamin) {
+                return $query->whereHas('dataNasabah', function ($query) use ($jenis_kelamin) {
+                  return $query->where('jenis_kelamin', $jenis_kelamin);
+                });
+              });
+            })->where('data_set_id', $set->id)->where('attribute_nilai_id', $target)->pluck('attribute_nilai_id')->toArray();
             if (count($nilai) > 0) {
               $total[$id_atribut][$target][] = count($nilai);
             } else {
@@ -78,7 +84,13 @@ class CoreComponent extends Component
           }
         } else {
           foreach ($target_attribute as $target) {
-            $nilai = DataSetDetail::where('data_set_id', $set->id)->where('attribute_nilai_id', $target)->pluck('attribute_nilai_id')->toArray();
+            $nilai = DataSetDetail::whereHas('attributeNilai', function ($query) use ($jenis_kelamin) {
+              return $query->whereHas('dataLatih', function ($query) use ($jenis_kelamin) {
+                return $query->whereHas('dataNasabah', function ($query) use ($jenis_kelamin) {
+                  return $query->where('jenis_kelamin', $jenis_kelamin);
+                });
+              });
+            })->where('data_set_id', $set->id)->where('attribute_nilai_id', $target)->pluck('attribute_nilai_id')->toArray();
             if (count($nilai) > 0) {
               $total['total'][$target][] = count($nilai);
             } else {
@@ -102,7 +114,11 @@ class CoreComponent extends Component
           foreach ($target_attribute as $target) {
             if (isset($total[$id_atribut][$target])) {
               $lists[] = count($total[$id_atribut][$target]);
-              $attribute_nilai = AttributeNilai::where('attribute_id', $detail->attributeNilai?->attribute?->id)->pluck('id')->toArray();
+              $attribute_nilai = AttributeNilai::whereHas('dataLatih', function ($query) use ($jenis_kelamin) {
+                return $query->whereHas('dataNasabah', function ($query) use ($jenis_kelamin) {
+                  return $query->where('jenis_kelamin', $jenis_kelamin);
+                });
+              })->where('attribute_id', $detail->attributeNilai?->attribute?->id)->pluck('id')->toArray();
               $data[$id_atribut][$target] = [
                 'atribut' => $nama_atribut,
                 'nilai' => $nilai_atribut,
