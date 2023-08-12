@@ -45,6 +45,6 @@ class AttributeNilai extends Model
      */
     public function dataLatih()
     {
-        return $this->belongsTo(DataLatih::class);
+        return $this->hasMany(DataLatih::class, 'attribute_nilai_id');
     }
 }
